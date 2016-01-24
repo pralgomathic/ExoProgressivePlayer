@@ -64,7 +64,9 @@ public class ExtractorRendererBuilder implements RendererBuilder {
 
     DefaultBandwidthMeter bandwidthMeter = new DefaultBandwidthMeter(player.getMainHandler(), null);
     DataSource dataSource = new DefaultUriDataSource(context, bandwidthMeter, userAgent);
+     // Cache cache = new SimpleCache(context.getCacheDir(), new LeastRecentlyUsedCacheEvictor(1024 * 1024 * 10));
     Log.d("ExtractorRendererBuilder", "Video URI : " + uri);
+     // CacheDataSource cacheDataSource = new CacheDataSource(cache, dataSource, false, false);
     ExtractorSampleSource sampleSource = new ExtractorSampleSource(uri, dataSource, allocator,
         BUFFER_SEGMENT_COUNT * BUFFER_SEGMENT_SIZE, new Mp4Extractor());
     MediaCodecVideoTrackRenderer videoRenderer = new MediaCodecVideoTrackRenderer(context,

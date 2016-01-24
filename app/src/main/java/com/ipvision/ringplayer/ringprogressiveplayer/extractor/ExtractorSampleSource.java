@@ -17,6 +17,7 @@ package com.ipvision.ringplayer.ringprogressiveplayer.extractor;
 
 import android.net.Uri;
 import android.os.SystemClock;
+import android.util.Log;
 import android.util.SparseArray;
 
 import com.ipvision.ringplayer.ringprogressiveplayer.util.C;
@@ -195,6 +196,7 @@ public final class ExtractorSampleSource implements SampleSource, SampleSourceRe
 
   private int extractedSampleCount;
   private int extractedSampleCountAtStartOfLoad;
+  private static final String TAG = "ExtractorSampleSource";
 
   /**
    * @param uri The {@link Uri} of the media stream.
@@ -255,6 +257,7 @@ public final class ExtractorSampleSource implements SampleSource, SampleSourceRe
    */
   public ExtractorSampleSource(Uri uri, DataSource dataSource, Allocator allocator,
       int requestedBufferSize, int minLoadableRetryCount, Extractor... extractors) {
+    Log.d(TAG,"requestedBufferSize : " + requestedBufferSize);
     this.uri = uri;
     this.dataSource = dataSource;
     this.allocator = allocator;

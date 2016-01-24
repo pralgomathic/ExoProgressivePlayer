@@ -55,6 +55,7 @@ public final class DefaultAllocator implements Allocator {
    * @param initialAllocationCount The number of allocations to create up front.
    */
   public DefaultAllocator(int individualAllocationSize, int initialAllocationCount) {
+      Log.d(TAG, "individualAllocationSize : " + individualAllocationSize + " initialAllocationCount: " + initialAllocationCount);
     Assertions.checkArgument(individualAllocationSize > 0);
     Assertions.checkArgument(initialAllocationCount >= 0);
     this.individualAllocationSize = individualAllocationSize;
@@ -64,6 +65,7 @@ public final class DefaultAllocator implements Allocator {
       initialAllocationBlock = new byte[initialAllocationCount * individualAllocationSize];
       for (int i = 0; i < initialAllocationCount; i++) {
         int allocationOffset = i * individualAllocationSize;
+          Log.d(TAG, "allocationOffset : " + allocationOffset);
         availableAllocations[i] = new Allocation(initialAllocationBlock, allocationOffset);
       }
     } else {
@@ -100,8 +102,10 @@ public final class DefaultAllocator implements Allocator {
     notifyAll();
   }
 
+    //trim gets called onLoadCancelled
   @Override
   public synchronized void trim(int targetSize) {
+      Log.d(TAG,"trim called...");
     int targetAllocationCount = Util.ceilDivide(targetSize, individualAllocationSize);
     int targetAvailableCount = Math.max(0, targetAllocationCount - allocatedCount);
     if (targetAvailableCount >= availableCount) {
